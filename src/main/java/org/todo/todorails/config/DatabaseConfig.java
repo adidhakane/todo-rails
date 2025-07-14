@@ -1,9 +1,9 @@
 package org.todo.todorails.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.Primary;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 
 import javax.sql.DataSource;
@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 public class DatabaseConfig {
 
     @Bean
-    @ConfigurationProperties("spring.datasource")
+    @Primary
     public DataSource dataSource() {
         String databaseUrl = System.getenv("DATABASE_URL");
         
