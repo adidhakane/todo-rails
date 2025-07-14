@@ -30,10 +30,10 @@ public class TaskController {
         List<Task> todayTasks = taskService.getTodayTasksForCurrentUser();
 
         /** TODO 13 (a): add the list "todaysTask" object  to the "model"
-                         object with the attribute name "todaysTasks"
+                         object with the attribute name "todayTasks"
                         using the method "addAttribute".
          **/
-        model.addAttribute("todaysTasks",todayTasks);
+        model.addAttribute("todayTasks",todayTasks);
 
         // Fetch all tasks for the current user, sorted by due date
         List<Task> allTasks = taskService.getAllTasksForCurrentUser();
@@ -56,7 +56,7 @@ public class TaskController {
          *                                    of the taskService with the parameter false.
          **/
         model.addAttribute("completedCount", taskService.countByCompleted(true));
-        model.addAttribute("pendingCount",taskService.countByCompleted(true));
+        model.addAttribute("pendingCount",taskService.countByCompleted(false));
 
         return "dashboard";
     }
