@@ -1,0 +1,23 @@
+# Ignore build artifacts
+target/
+!target/TotoRails-0.0.1-SNAPSHOT.jar
+
+# Ignore IDE files
+.idea/
+*.iml
+.vscode/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore Git
+.git/
+.gitignore
+
+# Ignore logs
+*.log
+
+# Ignore temporary files
+*.tmp
+*.temp

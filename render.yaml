@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: todo-rails-app
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: PORT
+        value: 8080
+  
+  - type: pserv
+    name: todo-rails-db
+    env: postgres
+    plan: free
+    databaseName: todorails
+    user: todorails
