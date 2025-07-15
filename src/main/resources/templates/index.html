@@ -6,6 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - ToDo Rails</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <!-- Add to head section -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Show loading indicator if page takes too long
+    setTimeout(function() {
+        if (document.readyState !== 'complete') {
+            document.body.innerHTML = `
+                <div style="text-align: center; padding: 50px;">
+                    <h3>Application Starting...</h3>
+                    <p>Please wait 30-60 seconds for the app to wake up from sleep mode.</p>
+                    <div class="spinner-border" role="status"></div>
+                </div>
+            `;
+        }
+    }, 10000);
+});
+</script>
 </head>
 <body>
 <div class="wrapper">
