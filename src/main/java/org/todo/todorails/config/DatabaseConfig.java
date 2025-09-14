@@ -5,8 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Primary;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @Profile("prod")
@@ -59,5 +63,34 @@ public class DatabaseConfig {
                 .username("sa")
                 .password("")
                 .build();
+    }
+
+    @Bean
+    @Primary
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("dataSource") DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+        emf.setDataSource(dataSource);
+        emf.setPackagesToScan("org.todo.todorails");
+        
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        emf.setJpaVendorAdapter(vendorAdapter);
+        
+        Properties jpaProperties = new Properties();
+        
+        // Check if we're using PostgreSQL
+        String databaseUrl = System.getenv("DATABASE_URL");
+        if (databaseUrl != null && databaseUrl.startsWith("postgresql://")) {
+            jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        } else {
+            jpaProperties.put("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+        }
+        
+        jpaProperties.put("hibernate.ddl-auto", "create-drop");
+        jpaProperties.put("hibernate.show_sql", "true");
+        jpaProperties.put("hibernate.format_sql", "true");
+        
+        emf.setJpaProperties(jpaProperties);
+        
+        return emf;
     }
 }
