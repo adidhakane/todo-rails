@@ -17,6 +17,8 @@ public class DatabaseConfig {
     public DataSource dataSource() {
         String databaseUrl = System.getenv("DATABASE_URL");
         
+        System.out.println("DATABASE_URL: " + (databaseUrl != null ? "Found" : "Not found"));
+        
         if (databaseUrl != null && databaseUrl.startsWith("postgresql://")) {
             // Parse the URL: postgresql://username:password@host:port/database
             // Transform to JDBC format and extract credentials
@@ -33,6 +35,8 @@ public class DatabaseConfig {
                 String username = userAndPassword[0];
                 String password = userAndPassword[1];
                 String jdbcUrl = "jdbc:postgresql://" + hostAndDb;
+                
+                System.out.println("Attempting PostgreSQL connection to: " + hostAndDb);
                 
                 return DataSourceBuilder
                         .create()
